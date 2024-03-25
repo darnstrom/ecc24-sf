@@ -1,5 +1,5 @@
 # ECC24 
-This repository contains code to reproduce the experiments in the [ECC24](https://ecc24.euca-ecc.org/) contribution *Stealthy Deactivations of Safety Filters*.
+This repository contains code to reproduce the experiments in the [ECC24](https://ecc24.euca-ecc.org/) contribution **Stealthy Deactivation of Safety Filters**.
 
 ## Generating results 
 The code requires that [Julia](https://julialang.org/) is installed. If Julia is installed, run the following command in a terminal: 
