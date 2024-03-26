@@ -75,10 +75,18 @@ for advers_type in [:none,:random,:gradient1dof, :gradient2dof]
         xhat = predict(xhat,u,A,B) # Prediction step, adversary
         xhat_per = predict(xhat_per,u,A,B) # Prediction step, controller
     end
+    # Compute moving average 
+    Nma = 25  # Smoothing horizon
+    Rho_padded = [zeros(Nma);Rhos]
+    MA = zeros(N)
+    for i = 1:N
+        MA[i] = sum(Rho_padded[i:i+Nma-1])/Nma
+    end
     # Write to file gradient _new 
     isdir("result") || mkdir("result");
     open("result/"*string(advers_type)*".dat"; write=true) do f
-        write(f, "t x1 x2 z1 z2 u hx hz rho\n")
-        writedlm(f, [collect(0:Ts:T-Ts) X[1,:] X[2,:] Z[1,:] Z[2,:] U [h(X[:,i]) for i in 1:size(Z,2)] [h(Z[:,i]) for i in 1:size(Z,2)] Rhos])
+        write(f, "t x1 x2 z1 z2 u hx hz rho MA\n")
+        writedlm(f, [collect(0:Ts:T-Ts) X[1,:] X[2,:] Z[1,:] Z[2,:] U [h(X[:,i]) for i in 1:size(Z,2)] [h(Z[:,i]) for i in 1:size(Z,2)] Rhos MA])
     end
+
 end
